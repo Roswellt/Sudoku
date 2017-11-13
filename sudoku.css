@@ -1,0 +1,80 @@
+#sudoku-grid {
+  margin: 0 auto;
+  border: 2px solid;
+  display: inline-block;
+}
+
+#center-div-wrapper {
+  text-align: center;
+}
+
+/*Style for each row*/
+.sudoku-row {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.sudoku-row div {
+  width: 100px;
+  height: 100px;
+  /*display: table;*/
+  display: flex;
+}
+
+/*Make the number cell fill the div*/
+.number {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/*Center the preset numbers within the cell*/
+.set {
+  margin-top: 30px;
+}
+
+/*Style for the input field*/
+input, textarea, select, button {
+  text-align: -webkit-center;
+  font-size: xx-large;
+}
+
+/*Splitting each div into boxes of 9*/
+.sudoku-row div:nth-child(1),
+.sudoku-row div:nth-child(2),
+.sudoku-row div:nth-child(4),
+.sudoku-row div:nth-child(5),
+.sudoku-row div:nth-child(7),
+.sudoku-row div:nth-child(8) {
+  border-right: 1px solid;
+}
+
+.sudoku-row div:nth-child(3),
+.sudoku-row div:nth-child(6) {
+  border-right: 3px solid;
+}
+
+.sudoku-row:nth-child(1),
+.sudoku-row:nth-child(2),
+.sudoku-row:nth-child(4),
+.sudoku-row:nth-child(5),
+.sudoku-row:nth-child(7),
+.sudoku-row:nth-child(8) {
+  border-bottom: 1px solid;
+}
+
+.sudoku-row:nth-child(3),
+.sudoku-row:nth-child(6) {
+  border-bottom: 3px solid;
+}
+
+/*Hiding input form spin button*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+}
