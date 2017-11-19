@@ -4,7 +4,7 @@
   display: inline-block;
 }
 
-#center-div-wrapper {
+.center-div-wrapper {
   text-align: center;
 }
 
@@ -69,6 +69,23 @@ input, textarea, select, button {
 .sudoku-row:nth-child(3),
 .sudoku-row:nth-child(6) {
   border-bottom: 3px solid;
+}
+
+#checkButton {
+  margin-top: 20px;
+  height: 50px;
+  width: 140px;
+  display: inline-block;
+  outline: 2px solid;
+}
+
+#checkButton h2 {
+  margin: 12px;
+  cursor: default;
+}
+
+#checkButton:hover {
+  background-color: #f0f0f0;
 }
 
 /*Hiding input form spin button*/
