@@ -1,6 +1,11 @@
-var sudokuMatrix = new Array(9);
+// var sudokuMatrix = new Array(9);
+var sudokuMatrix = table;
+var staticMatrix = new Array(9);
+console.log(sudokuMatrix);
+console.log(staticMatrix)
 for (var i = 0; i < 9; i++) {
-  sudokuMatrix[i] = new Array(9);
+  // sudokuMatrix[i] = new Array(9);
+  staticMatrix = new Array(9);
 }
 
 // Initializing the matrix with values
@@ -12,8 +17,10 @@ $(document).ready(function() {
     for (var j = 0; j < columns.length; j++) {
       if ($(columns[j]).text() != null && $(columns[j]).text() != "") {
         sudokuMatrix[i][j] = $(columns[j]).text();
+        staticMatrix[i][j] = true;
       } else {
         sudokuMatrix[i][j] = -1;
+        staticMatrix[i][j] = false;
       }
       $(columns[j]).data('position', {
         row: i,
@@ -96,16 +103,22 @@ function checkBoard() {
     var columns = $(rows[i]).children("div");
     for (var j = 0; j < columns.length; j++) {
       var number;
+      var count = 0;
       if ($(columns[j]).children("h1").length > 0) {
         number = $(columns[j]).text();
       } else {
         number = $(columns[j]).children("input").get(0).value;
       }
-      console.log(number);
-      if (!(number >= 1 || number <= 9) || number == "" || !checkRow(i, number) || !checkColumn(j, number) || !checkSquare(i, j, number)) {
+      count += number;
+      if (!(number >= 1 || number <= 9) || number == "" || !checkRow(i, number)) {
         valid = false;
         break;
       }
+    }
+    // Check if numbers in row are unique 1-9
+    if (count != 45) {
+      valid = false;
+      break;
     }
   }
   return valid;
@@ -127,13 +140,60 @@ $('.number').keypress(function(event) {
   }
 });
 
+// Checks if sudoku is a valid solution
 $("#checkButton").click(function() {
   var modalText;
-  if(checkBoard) {
+  if (checkBoard) {
     modalText = "Not a valid solution!";
   } else {
     modalText = "Solved!";
   }
   $("#ex1").text(modalText);
   $("#ex1").modal();
+})
+
+// Solves the sudoku using backtracking
+$("#solveButton").click(function() {
+
+  for(var row = 0; row < 9; row++) {
+    var count = 1;
+    var forward = true;
+
+    for(var column = 0; column < 9; column++) {
+      if(staticMatrix[row][column] == true) {
+        if(!forward) {
+          if(column > 0) {
+            column -= 2;
+            count = sudokuMatrix[row][column + 1] + 1;
+          } else if (column == 0) {
+            row -= 1;
+            column = 7;
+            count = sudokuMatrix[row][column + 1] + 1;
+          }
+        }
+      } else {
+        sudokuMatrix[row][column] = count;
+        if(checkRow(row, count) && checkColumn(column, count) && checkSquare(row, column, count) && count <= 9) {
+          count = 1;
+          forward = true;
+        } else {
+          count++;
+          if(count > 9 && column > 0) {
+            sudokuMatrix[row][column] = 0;
+            column -= 2;
+            count = sudokuMatrix[row][column + 1] + 1;
+            forward = false;
+          } else if (count > 9 && column == 0) {
+            sudokuMatrix[row][column] = 0;
+            row -= 1;
+            column = 7;
+            count = sudokuMatrix[row][column + 1] + 1;
+            forward = false;
+          } else if (count <= 9) {
+            column -= 1;
+          }
+        }
+      }
+    }
+  }
 })
