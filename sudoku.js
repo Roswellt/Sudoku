@@ -1,11 +1,8 @@
 // var sudokuMatrix = new Array(9);
 var sudokuMatrix = table;
 var staticMatrix = new Array(9);
-console.log(sudokuMatrix);
-console.log(staticMatrix)
 for (var i = 0; i < 9; i++) {
-  // sudokuMatrix[i] = new Array(9);
-  staticMatrix = new Array(9);
+  staticMatrix[i] = new Array(9);
 }
 
 // Initializing the matrix with values
@@ -15,11 +12,10 @@ $(document).ready(function() {
   for (var i = 0; i < rows.length; i++) {
     var columns = $(rows[i]).children("div");
     for (var j = 0; j < columns.length; j++) {
-      if ($(columns[j]).text() != null && $(columns[j]).text() != "") {
-        sudokuMatrix[i][j] = $(columns[j]).text();
+      if (sudokuMatrix[i][j] != 0) {
         staticMatrix[i][j] = true;
+        $(columns[j]).append("<h1 class=\"number set\">" + sudokuMatrix[i][j] + "</h1>");
       } else {
-        sudokuMatrix[i][j] = -1;
         staticMatrix[i][j] = false;
       }
       $(columns[j]).data('position', {
