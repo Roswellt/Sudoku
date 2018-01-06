@@ -17,6 +17,7 @@ $(document).ready(function() {
         $(columns[j]).append("<h1 class=\"number set\">" + sudokuMatrix[i][j] + "</h1>");
       } else {
         staticMatrix[i][j] = false;
+        $(columns[j]).append("<input class =\"number unset\" type=\"number\" step=\"1\" pattern=\"\d{1}\"/>");
       }
       $(columns[j]).data('position', {
         row: i,
